@@ -19,9 +19,11 @@ def stop_motor():
     GPIO.output(motor_pin, GPIO.LOW)
 
 try:
+    print("Starting motor...")
     start_motor()
     time.sleep(2)  # Run the motor for 2 seconds
     stop_motor()
+    print("Motor stopped.")
 
 except KeyboardInterrupt:
     pass
