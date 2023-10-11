@@ -6,7 +6,7 @@ from gpiozero.pins.pigpio import PiGPIOFactory
 factory = PiGPIOFactory()
 
 # Create a Servo object and specify the GPIO pin where your servo is connected
-servo = Servo(8, pin_factory=factory)  # Adjust the GPIO pin (17) to match your setup
+servo = Servo(3, pin_factory=factory)  # Adjust the GPIO pin (17) to match your setup
 
 # Define the angle for forward and backward positions
 forward_angle = 90
