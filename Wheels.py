@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
-# Set the GPIO pin number (pin 3)
-motor_pin = 3
+# Set the GPIO pin number (pin 8)
+motor_pin = 8
 
 # Configure the GPIO mode
 GPIO.setmode(GPIO.BCM)
@@ -10,18 +10,11 @@ GPIO.setmode(GPIO.BCM)
 # Set up the motor pin as an output
 GPIO.setup(motor_pin, GPIO.OUT)
 
-# Function to start the motor
-def start_motor():
+try:
     GPIO.output(motor_pin, GPIO.HIGH)
-
-# Function to stop the motor
-def stop_motor():
+    time.sleep(1)
+    print("test")
     GPIO.output(motor_pin, GPIO.LOW)
-
-GDIO.output(motor_pin, GPIO.HIGH)
-time.sleep(1)
-print("test")
-GPIO.output(motor_pin, GPIO.LOW)
 
 except KeyboardInterrupt:
     pass
@@ -29,5 +22,3 @@ except KeyboardInterrupt:
 finally:
     # Clean up GPIO settings
     GPIO.cleanup()
-
-
