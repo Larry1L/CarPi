@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-import keyboard
 
 # Set the GPIO pin numbers (pin 8 & 14)
 motorR_pin = 8
@@ -55,14 +54,6 @@ try:
         if GPIO.input(sensorR_pin) == GPIO.LOW:
             print("Right Sensor - Line detected")
             TurnLeft()
-        
-        # Check for arrow key presses
-        if keyboard.is_pressed('left'):
-            TurnLeft()
-        elif keyboard.is_pressed('right'):
-            TurnRight()
-        elif keyboard.is_pressed('down'):
-            StopDriving()
         else:
             FullSpeed()
         
