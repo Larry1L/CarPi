@@ -12,42 +12,34 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(motorR_pin, GPIO.OUT)
 GPIO.setup(motorL_pin, GPIO.OUT)
 
-
 def TurnRight():
-    try:
     while True:  # Loop indefinitely
         GPIO.output(motorR_pin, GPIO.HIGH)  # Start the motor
-        time.sleep(0.1)  # Run the motor for 1 second
+        time.sleep(0.1)  # Run the motor for 0.1 seconds
         print("Turning Right")
+        GPIO.output(motorR_pin, GPIO.LOW)  # Stop the motor
+        time.sleep(0.1)  # Wait for 0.1 seconds
 
 def TurnLeft():
-    try:
     while True:  # Loop indefinitely
         GPIO.output(motorL_pin, GPIO.HIGH)  # Start the motor
-        time.sleep(0.1)  # Run the motor for 1 second
+        time.sleep(0.1)  # Run the motor for 0.1 seconds
         print("Turning Left")
-def BrakeRight():
-    try:
-    while True:  # Loop indefinitely
-        GPIO.output(motorR_pin, GPIO.LOW)  # Start the motor
-        time.sleep(0.1)  # Run the motor for 1 second
-        print("Turning Right")
+        GPIO.output(motorL_pin, GPIO.LOW)  # Stop the motor
+        time.sleep(0.1)  # Wait for 0.1 seconds
 
-def BrakeLeft():
-    try:
-    while True:  # Loop indefinitely
-        GPIO.output(motorL_pin, GPIO.LOW)  # Start the motor
-        time.sleep(0.1)  # Run the motor for 1 second
-        print("Turning Left")
 def DriveForward():
-   try:
-       while True: # Loop indefinitely
-           GPIO.output(motorL_pin, GPIO.HIGH) # Starting both motors 
-           GPIO.output(motorR_pin, GPIO.HIGH)
-           print("Driving Forward")
+    while True:  # Loop indefinitely
+        GPIO.output(motorL_pin, GPIO.HIGH)  # Start the left motor
+        GPIO.output(motorR_pin, GPIO.HIGH)  # Start the right motor
+        time.sleep(0.1)  # Run both motors for 0.1 seconds
+        print("Driving Forward")
+        GPIO.output(motorL_pin, GPIO.LOW)  # Stop the left motor
+        GPIO.output(motorR_pin, GPIO.LOW)  # Stop the right motor
+        time.sleep(0.1)  # Wait for 0.1 seconds
+
 try:
-    while True:
-    DriveForward():
+    DriveForward()
 
 except KeyboardInterrupt:
     pass
