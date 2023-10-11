@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import keyboard
 
 # Set the GPIO pin numbers (pin 8 & 14)
 motorR_pin = 8
@@ -53,6 +54,17 @@ def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
     motorL_pwm.ChangeDutyCycle(0)
     time.sleep(1)
+
+# Function to pause and resume the program
+def toggle_pause():
+    global paused
+    if paused:
+        print("Resuming...")
+        paused = False
+    else:
+        print("Paused. Press spacebar to resume.")
+        paused = True
+        
 # Wait for user to press Enter
 input("Press Enter to start...")
 try:
