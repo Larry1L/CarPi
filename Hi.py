@@ -35,8 +35,8 @@ def TurnLeft():
     motorL_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
 
 def FullSpeed():
-    motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
+    motorR_pwm.ChangeDutyCycle(66)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(66)  # Full speed for the left motor
 
 def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
@@ -56,18 +56,16 @@ try:
             print("Right Sensor - Line detected")
             TurnLeft()
         
-        
         # Check for arrow key presses
         if keyboard.is_pressed('left'):
             TurnLeft()
         elif keyboard.is_pressed('right'):
             TurnRight()
-        elif keyboard.is_pressed('up'):
-            FullSpeed()
         elif keyboard.is_pressed('down'):
             StopDriving()
         else:
-        FullSpeed()
+            FullSpeed()
+        
         time.sleep(0.1)  # Adjust the sleep time as needed
 
 except KeyboardInterrupt:
