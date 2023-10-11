@@ -59,12 +59,13 @@ def toggle_pause():
         print("Resuming...")
         paused = False
     else:
-        print("Paused. Press Enter to resume.")
+        print("Paused. Press Spacebar to resume.")
         paused = True
         StopDriving()
 
 # Wait for the user to press Enter to start
 input("Press Enter to start...")
+
 try:
     FullSpeed()
     while True:
@@ -77,7 +78,7 @@ try:
                 TurnLeft()
             else:
                 LowSpeed()
-                if input("Press Spacebar to resume...") == " ":
+                if input("Press Spacebar to resume...") == " " and paused:
                     toggle_pause()
         time.sleep(0.1)  # Adjust the sleep time as needed
 
