@@ -11,10 +11,12 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(motor_pin, GPIO.OUT)
 
 try:
-    GPIO.output(motor_pin, GPIO.HIGH)
-    time.sleep(1)
-    print("test")
-    GPIO.output(motor_pin, GPIO.LOW)
+    while True:  # Loop indefinitely
+        GPIO.output(motor_pin, GPIO.HIGH)  # Start the motor
+        time.sleep(1)  # Run the motor for 1 second
+        print("test")
+        GPIO.output(motor_pin, GPIO.LOW)  # Stop the motor
+        time.sleep(1)  # Wait for 1 second
 
 except KeyboardInterrupt:
     pass
