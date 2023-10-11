@@ -3,7 +3,7 @@ import time
 
 # Configure GPIO pins
 GPIO.setmode(GPIO.BCM)
-sensor_pin = 8  # Example GPIO pin, adjust to your setup
+sensor_pin = 4  # Example GPIO pin, adjust to your setup
 
 # Set up the sensor pin as an input
 GPIO.setup(sensor_pin, GPIO.IN)
