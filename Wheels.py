@@ -34,9 +34,6 @@ def DriveForward():
         GPIO.output(motorR_pin, GPIO.HIGH)  # Start the right motor
         time.sleep(0.1)  # Run both motors for 0.1 seconds
         print("Driving Forward")
-        GPIO.output(motorL_pin, GPIO.LOW)  # Stop the left motor
-        GPIO.output(motorR_pin, GPIO.LOW)  # Stop the right motor
-        time.sleep(0.1)  # Wait for 0.1 seconds
 
 try:
     DriveForward()
