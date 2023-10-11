@@ -9,13 +9,13 @@ sensor_pin = 17  # Example GPIO pin, adjust to your setup
 GPIO.setup(sensor_pin, GPIO.IN)
 
 try:
-    if GPIO.input(sensor_pin) == GPIO.LOW:
+    if GPIO.input(sensor_pin) == GPIO.HIGH:
         print("Sensor is detecting a line at startup")
     else:
         print("Sensor is not detecting a line at startup")
 
     while True:
-        if GPIO.input(sensor_pin) == GPIO.LOW:
+        if GPIO.input(sensor_pin) == GPIO.HIGH:
             print("Line detected")
         else:
             print("No line detected")
