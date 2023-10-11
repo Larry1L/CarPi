@@ -48,7 +48,7 @@ FullSpeed()
 
 try:
     while True:
-        if GPIO.input(sensorL_pin) == GPIO.LOW:
+        if GPIO.input(sensorL_pin) == GPIO.HIGH:
             print("Left Sensor - Line detected")
             TurnRight()
         if GPIO.input(sensorR_pin) == GPIO.LOW:
