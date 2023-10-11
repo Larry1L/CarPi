@@ -25,8 +25,10 @@ def TurnLeft():
         GPIO.output(motorL_pin, GPIO.HIGH)  # Start the motor
         time.sleep(0.1)  # Run the motor for 0.1 seconds
         print("Turning Left")
-        GPIO.output(motorL_pin, GPIO.LOW)  # Stop the motor
-        time.sleep(0.1)  # Wait for 0.1 seconds
+        GPIO.output(motorR_pin, GPIO.100)  # Start the motor
+        time.sleep(0.1)  # Run the motor for 0.1 seconds
+        print("Turning Left")
+
 
 def DriveForward():
     while True:  # Loop indefinitely
@@ -36,7 +38,7 @@ def DriveForward():
         print("Driving Forward")
 
 try:
-    TurnLeft():
+    TurnLeft()
 
 except KeyboardInterrupt:
     pass
