@@ -55,6 +55,8 @@ try:
         if GPIO.input(sensorR_pin) == GPIO.LOW:
             print("Right Sensor - Line detected")
             TurnLeft()
+        else
+        FullSpeed()
         
         # Check for arrow key presses
         if keyboard.is_pressed('left'):
