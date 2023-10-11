@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-LED = 14
+LED = 8
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(LED,GPIO.OUT)
