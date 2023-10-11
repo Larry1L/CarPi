@@ -7,7 +7,8 @@ sensorL_pin = 4  # Example GPIO pin, adjust to your setup
 sensorR_pin = 17 # Example GPIO pin, adjust to your setup
 
 # Set up the sensor pin as an input
-GPIO.setup(sensor_pin, GPIO.IN)
+GPIO.setup(sensorL_pin, GPIO.IN)
+GPIO.setup(sensorR_pin, GPIO.IN)
 
 try:
     if GPIO.input(sensorL_pin) == GPIO.LOW:
