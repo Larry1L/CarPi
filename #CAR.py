@@ -1,41 +1,90 @@
-#CAR
 import RPi.GPIO as GPIO
 import time
 
-control = [5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10]
+# Set the GPIO pin numbers (pin 8 & 14)
+motorR_pin = 8
+motorL_pin = 14
+sensor_pin = 4  # Example GPIO pin, adjust to your setup
 
-servo = 22
+# Configure the GPIO mode
+GPIO.setmode(GPIO.BCM)
 
-GPIO.setmode(GPIO.BOARD)
+# Set up the motor pins as an output
+GPIO.setup(motorR_pin, GPIO.OUT)
+GPIO.setup(motorL_pin, GPIO.OUT)
+# Set up the sensor pin as an input
+GPIO.setup(sensor_pin, GPIO.IN)
 
-GPIO.setup(servo,GPIO.OUT)
-# in servo motor,
-# 1ms pulse for 0 degree (LEFT)
-# 1.5ms pulse for 90 degree (MIDDLE)
-# 2ms pulse for 180 degree (RIGHT)
+# Create PWM instances for the left and right motors
+motorR_pwm = GPIO.PWM(motorR_pin, 100)  # PWM frequency (Hz)
+motorL_pwm = GPIO.PWM(motorL_pin, 100)
 
-# so for 50hz, one frequency is 20ms
-# duty cycle for 0 degree = (1/20)*100 = 5%
-# duty cycle for 90 degree = (1.5/20)*100 = 7.5%
-# duty cycle for 180 degree = (2/20)*100 = 10%
+# Start PWM with 0% duty cycle (stopped)
+motorR_pwm.start(0)
+motorL_pwm.start(0)
 
-p=GPIO.PWM(servo,50)# 50hz frequency
+def TurnRight():
+    motorR_pwm.ChangeDutyCycle(25)  # Adjust duty cycle to control speed
+    motorL_pwm.ChangeDutyCycle(100)  # Full speed
+    time.sleep(0.1)
 
-p.start(2.5)# starting duty cycle ( it set the servo to 0 degree )
+def TurnLeft():
+    motorR_pwm.ChangeDutyCycle(100)  # Full speed
+    motorL_pwm.ChangeDutyCycle(25)  # Adjust duty cycle to control speed
+    time.sleep(0.1)
 
+def FullSpeed():
+    motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
+    time.sleep(0.1)
+
+def MidSpeed():
+    motorR_pwm.ChangeDutyCycle(66)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(66)  # Full speed for the left motor
+    time.sleep(0.1)
+
+def LowSpeed():
+    motorR_pwm.ChangeDutyCycle(33)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(33)  # Full speed for the left motor
+    time.sleep(0.1)
+
+def StopDriving():
+    motorR_pwm.ChangeDutyCycle(0)  # Stop
+    motorL_pwm.ChangeDutyCycle(0)
+    time.sleep(1)
 
 try:
-       while True:
-           for x in range(11):
-             p.ChangeDutyCycle(control[x])
-             time.sleep(0.03)
-             print x
-           
-           for x in range(9,0,-1):
-             p.ChangeDutyCycle(control[x])
-             time.sleep(0.03)
-             print x
-           
+    if GPIO.input(sensor_pin) == GPIO.HIGH:
+        print("Sensor is detecting a line at startup")
+    else:
+        print("Sensor is not detecting a line at startup")
+
+    while True:
+        if GPIO.input(sensor_pin) == GPIO.HIGH:
+            print("Line detected")
+        else:
+            print("No line detected")
+
+        time.sleep(0.1)  # Adjust the sleep time as needed
+
+        time.sleep(3)
+        FullSpeed()
+        time.sleep(3)
+        MidSpeed()
+        time.sleep(3)
+        LowSpeed()
+        time.sleep(3)
+        TurnLeft()
+        time.sleep(3)
+        TurnRight()
+        time.sleep(3)
+        StopDriving()
+
 except KeyboardInterrupt:
+    pass
+
+finally:
+    # Clean up GPIO settings
+    motorR_pwm.stop()
+    motorL_pwm.stop()
     GPIO.cleanup()
-    
