@@ -23,23 +23,17 @@ motorL_pwm.start(0)
 def TurnRight():
     motorR_pwm.ChangeDutyCycle(50)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(100)  # Full speed
-    time.sleep(1)
-    motorR_pwm.ChangeDutyCycle(0)  # Stop
-    motorL_pwm.ChangeDutyCycle(0)
-    time.sleep(1)
+    time.sleep(0.1)
 
 def TurnLeft():
     motorR_pwm.ChangeDutyCycle(100)  # Full speed
     motorL_pwm.ChangeDutyCycle(50)  # Adjust duty cycle to control speed
-    time.sleep(1)
-    motorR_pwm.ChangeDutyCycle(0)  # Stop
-    motorL_pwm.ChangeDutyCycle(0)
-    time.sleep(1)
+    time.sleep(0.1)
 
 def DriveForward():
     motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
-    time.sleep(1)
+    time.sleep(0.1)
 
 def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
