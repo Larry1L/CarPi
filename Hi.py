@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import keyboard
 
 # Set the GPIO pin numbers (pin 8 & 14)
 motorR_pin = 8
@@ -25,8 +26,6 @@ motorL_pwm = GPIO.PWM(motorL_pin, 100)
 motorR_pwm.start(0)
 motorL_pwm.start(0)
 
-paused = False  # To track if the program is paused
-
 def TurnRight():
     motorR_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(100)  # Full speed
@@ -39,47 +38,34 @@ def FullSpeed():
     motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
 
-def MidSpeed():
-    motorR_pwm.ChangeDutyCycle(66)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(66)  # Full speed for the left motor
-
-def LowSpeed():
-    motorR_pwm.ChangeDutyCycle(40)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(40)  # Full speed for the left motor
-
 def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
     motorL_pwm.ChangeDutyCycle(0)
-    time.sleep(1)
-
-# Function to pause and resume the program
-def toggle_pause():
-    global paused
-    if paused:
-        print("Resuming...")
-        paused = False
-    else:
-        print("Paused. Press Spacebar to resume.")
-        paused = True
-        StopDriving()
 
 # Wait for the user to press Enter to start
 input("Press Enter to start...")
 
+FullSpeed()
+
 try:
-    FullSpeed()
     while True:
-        if not paused:
-            if GPIO.input(sensorL_pin) == GPIO.LOW:
-                print("Left Sensor - Line detected")
-                TurnRight()
-            if GPIO.input(sensorR_pin) == GPIO.LOW:
-                print("Right Sensor - Line detected")
-                TurnLeft()
-            else:
-                LowSpeed()
-                if input("Press Spacebar to resume...") == " " and paused:
-                    toggle_pause()
+        if GPIO.input(sensorL_pin) == GPIO.LOW:
+            print("Left Sensor - Line detected")
+            TurnRight()
+        if GPIO.input(sensorR_pin) == GPIO.LOW:
+            print("Right Sensor - Line detected")
+            TurnLeft()
+        
+        # Check for arrow key presses
+        if keyboard.is_pressed('left'):
+            TurnLeft()
+        elif keyboard.is_pressed('right'):
+            TurnRight()
+        elif keyboard.is_pressed('up'):
+            FullSpeed()
+        elif keyboard.is_pressed('down'):
+            StopDriving()
+        
         time.sleep(0.1)  # Adjust the sleep time as needed
 
 except KeyboardInterrupt:
