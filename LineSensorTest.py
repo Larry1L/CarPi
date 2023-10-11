@@ -14,14 +14,14 @@ try:
         print("Left Sensor is detecting a line at startup")
 
     if GPIO.input(sensorR_pin) == GPIO.LOW:
-        print("Left Sensor is detecting a line at startup")
+        print("Right Sensor is detecting a line at startup")
 
     while True:
         if GPIO.input(sensorL_pin) == GPIO.LOW:
             print("Left Sensor - Line detected")
 
         if GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Left Sensor - Line detected")
+            print("Right Sensor - Line detected")
 
         time.sleep(1)  # Adjust the sleep time as needed
 
