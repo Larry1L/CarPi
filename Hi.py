@@ -1,17 +1,28 @@
-from gpiozero import Motor
-from time import sleep
-
-motor = Motor(forward=4, backward=14)
-
-while True:
-    motor.forward()
-    sleep(5)
-    motor.backward()
-    sleep(5)
-
-
+import RPi.GPIO as GPIO
 import time
 
-while True:
-    print("test")
-    time.sleep(3)  # Sleep for 3 seconds
+# Set the GPIO pin number (pin 8)
+power_pin = 8
+
+# Configure the GPIO mode
+GPIO.setmode(GPIO.BCM)
+
+# Set up the power pin as an output
+GPIO.setup(power_pin, GPIO.OUT)
+
+try:
+    while True:  # Loop indefinitely
+        GPIO.output(power_pin, GPIO.HIGH)  # Turn on power
+        print("Power")
+        time.sleep(1)  # Power on for 1 second
+
+        GPIO.output(power_pin, GPIO.LOW)  # Turn off power
+        print("Null")
+        time.sleep(1)  # Wait for 1 second
+
+except KeyboardInterrupt:
+    pass
+
+finally:
+    # Clean up GPIO settings
+    GPIO.cleanup()
