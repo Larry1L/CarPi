@@ -1,33 +1,31 @@
-from gpiozero import Servo
+import RPi.GPIO as GPIO
 import time
 
-# Use the pigpio pin factory for servo control
-from gpiozero.pins.pigpio import PiGPIOFactory
-factory = PiGPIOFactory()
+# Set the GPIO pin number (pin 3)
+motor_pin = 3
 
-# Create a Servo object and specify the GPIO pin where your servo is connected
-servo = Servo(3, pin_factory=factory)  # Adjust the GPIO pin (17) to match your setup
+# Configure the GPIO mode
+GPIO.setmode(GPIO.BCM)
 
-# Define the angle for forward and backward positions
-forward_angle = 90
-backward_angle = -90
+# Set up the motor pin as an output
+GPIO.setup(motor_pin, GPIO.OUT)
+
+# Function to start the motor
+def start_motor():
+    GPIO.output(motor_pin, GPIO.HIGH)
+
+# Function to stop the motor
+def stop_motor():
+    GPIO.output(motor_pin, GPIO.LOW)
 
 try:
-    while True:
-        # Move the servo forward for 2 seconds
-        servo.value = forward_angle / 180.0
-        time.sleep(2)
-
-        print("true")
-
-        # Move the servo backward for 3 seconds
-        servo.value = backward_angle / 180.0
-        time.sleep(3)
+    start_motor()
+    time.sleep(2)  # Run the motor for 2 seconds
+    stop_motor()
 
 except KeyboardInterrupt:
     pass
 
 finally:
-    # Reset the servo to the neutral position (optional)
-    servo.value = None
-    servo.close()
+    # Clean up GPIO settings
+    GPIO.cleanup()
