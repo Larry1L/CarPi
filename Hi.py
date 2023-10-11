@@ -37,16 +37,18 @@ def TurnLeft():
     time.sleep(1)
 
 def DriveForward():
-    motorR_pwm.ChangeDutyCycle(75)  # 75% speed for the right motor
+    motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
     time.sleep(1)
+
+def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
     motorL_pwm.ChangeDutyCycle(0)
     time.sleep(1)
 
 try:
     while True:
-        DriveForward()
+        TurnLeft()
 
 except KeyboardInterrupt:
     pass
