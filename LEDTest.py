@@ -13,11 +13,10 @@ GPIO.setup(power_pin, GPIO.OUT)
 try:
     while True:  # Loop indefinitely
         GPIO.output(power_pin, GPIO.HIGH)  # Turn on power
-        time.sleep(5)  # Power on for 5 seconds
-print("Power")
+        time.sleep(5)  # Power on for 5 second
         GPIO.output(power_pin, GPIO.LOW)  # Turn off power
         time.sleep(5)  # Wait for 5 seconds
-print("Null")
+
 except KeyboardInterrupt:
     pass
 
