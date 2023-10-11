@@ -48,14 +48,15 @@ FullSpeed()
 
 try:
     while True:
-        if GPIO.input(sensorL_pin) == GPIO.HIGH:
+        if GPIO.input(sensorL_pin) == GPIO.LOW:
             print("Left Sensor - Line detected")
             TurnRight()
-        if GPIO.input(sensorR_pin) == GPIO.LOW:
+        elif GPIO.input(sensorR_pin) == GPIO.LOW:
             print("Right Sensor - Line detected")
             TurnLeft()
         else:
             FullSpeed()
+
         
         time.sleep(0.1)  # Adjust the sleep time as needed
 
