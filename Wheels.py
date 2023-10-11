@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 # Set the GPIO pin number (pin 8)
-motor_pin = 8
+motor_pin = 14
 
 # Configure the GPIO mode
 GPIO.setmode(GPIO.BCM)
