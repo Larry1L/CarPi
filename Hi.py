@@ -53,7 +53,8 @@ def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
     motorL_pwm.ChangeDutyCycle(0)
     time.sleep(1)
-
+# Wait for user to press Enter
+input("Press Enter to start...")
 try:
     FullSpeed()
     while True:
