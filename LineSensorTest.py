@@ -3,23 +3,27 @@ import time
 
 # Configure GPIO pins
 GPIO.setmode(GPIO.BCM)
-sensor_pin = 4  # Example GPIO pin, adjust to your setup
+sensorL_pin = 4  # Example GPIO pin, adjust to your setup
+sensorR_pin =  # Example GPIO pin, adjust to your setup
 
 # Set up the sensor pin as an input
 GPIO.setup(sensor_pin, GPIO.IN)
 
 try:
-    if GPIO.input(sensor_pin) == GPIO.LOW:
-        print("Sensor is detecting a line at startup")
-    else:
-        print("Sensor is not detecting a line at startup")
+    if GPIO.input(sensorL_pin) == GPIO.LOW:
+        print("Left Sensor is detecting a line at startup")
+
+    if GPIO.input(sensorR_pin) == GPIO.LOW:
+        print("Left Sensor is detecting a line at startup")
 
     while True:
-        if GPIO.input(sensor_pin) == GPIO.LOW:
-            print("Line detected")
-        else:
-            print("No line detected")
-        time.sleep(0.1)  # Adjust the sleep time as needed
+        if GPIO.input(sensorL_pin) == GPIO.LOW:
+            print("Left Sensor - Line detected")
+
+        if GPIO.input(sensorR_pin) == GPIO.LOW:
+            print("Left Sensor - Line detected")
+
+        time.sleep(1)  # Adjust the sleep time as needed
 
 except KeyboardInterrupt:
     pass
