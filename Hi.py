@@ -4,7 +4,8 @@ import time
 # Set the GPIO pin numbers (pin 8 & 14)
 motorR_pin = 8
 motorL_pin = 14
-sensor_pin = 4  # Example GPIO pin, adjust to your setup
+sensorL_pin = 4  # Example GPIO pin, adjust to your setup
+sensorR_pin = 17 # Example GPIO pin, adjust to your setup
 
 # Configure the GPIO mode
 GPIO.setmode(GPIO.BCM)
@@ -13,7 +14,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(motorR_pin, GPIO.OUT)
 GPIO.setup(motorL_pin, GPIO.OUT)
 # Set up the sensor pin as an input
-GPIO.setup(sensor_pin, GPIO.IN)
+GPIO.setup(sensorL_pin, GPIO.IN)
+GPIO.setup(sensorR_pin, GPIO.IN)
 
 
 # Create PWM instances for the left and right motors
@@ -53,19 +55,15 @@ def StopDriving():
     time.sleep(1)
 
 try:
+FullSpeed()
     while True:
-        time.sleep(3)
-        FullSpeed()
-        time.sleep(3)
-        MidSpeed()
-        time.sleep(3)
-        LowSpeed()
-        time.sleep(3)
-        TurnLeft()
-        time.sleep(3)
-        TurnRight()
-        time.sleep(3)
-        StopDriving()
+        if GPIO.input(sensorL_pin) == GPIO.LOW:
+            print("Left Sensor - Line detected")
+TurnRight()
+        if GPIO.input(sensorR_pin) == GPIO.LOW:
+            print("Right Sensor - Line detected")
+TurnLeft()
+        time.sleep(0.1)  # Adjust the sleep time as needed
 
 except KeyboardInterrupt:
     pass
