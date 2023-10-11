@@ -18,14 +18,10 @@ def start_motor():
 def stop_motor():
     GPIO.output(motor_pin, GPIO.LOW)
 
-try:
-    while True:  # Loop indefinitely
-        start_motor()
-        time.sleep(2)  # Run the motor for 2 seconds
-        print("Motor is running...")
-        stop_motor()
-        print("Motor stopped...")
-        time.sleep(1)  # Wait for 1 second
+GDIO.output(motor_pin, GPIO.HIGH)
+time.sleep(1)
+print("test")
+GPIO.output(motor_pin, GPIO.LOW)
 
 except KeyboardInterrupt:
     pass
@@ -33,3 +29,5 @@ except KeyboardInterrupt:
 finally:
     # Clean up GPIO settings
     GPIO.cleanup()
+
+
