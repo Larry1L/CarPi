@@ -18,6 +18,8 @@ try:
         servo.value = forward_angle / 180.0
         time.sleep(2)
 
+        print("true")
+
         # Move the servo backward for 3 seconds
         servo.value = backward_angle / 180.0
         time.sleep(3)
