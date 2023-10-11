@@ -17,7 +17,7 @@ def TurnRight():
         GPIO.output(motorR_pin, GPIO.HIGH)  # Start the motor
         time.sleep(0.1)  # Run the motor for 0.1 seconds
         print("Turning Right")
-        GPIO.output(motorR_pin, GPIO.LOW)  # Stop the motor
+        GPIO.output(motorL_pin, GPIO.LOW)  # Stop the motor
         time.sleep(0.1)  # Wait for 0.1 seconds
 
 def TurnLeft():
@@ -25,7 +25,7 @@ def TurnLeft():
         GPIO.output(motorL_pin, GPIO.HIGH)  # Start the motor
         time.sleep(0.1)  # Run the motor for 0.1 seconds
         print("Turning Left")
-        GPIO.output(motorR_pin, GPIO.100)  # Start the motor
+        GPIO.output(motorR_pin, GPIO.LOW)  # Start the motor
         time.sleep(0.1)  # Run the motor for 0.1 seconds
         print("Turning Left")
 
