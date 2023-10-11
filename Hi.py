@@ -27,13 +27,13 @@ motorR_pwm.start(0)
 motorL_pwm.start(0)
 
 def TurnRight():
-    motorR_pwm.ChangeDutyCycle(25)  # Adjust duty cycle to control speed
-    motorL_pwm.ChangeDutyCycle(100)  # Full speed
+    motorR_pwm.ChangeDutyCycle(17)  # Adjust duty cycle to control speed
+    motorL_pwm.ChangeDutyCycle(33)  # Full speed
     time.sleep(0.1)
 
 def TurnLeft():
-    motorR_pwm.ChangeDutyCycle(100)  # Full speed
-    motorL_pwm.ChangeDutyCycle(25)  # Adjust duty cycle to control speed
+    motorR_pwm.ChangeDutyCycle(33)  # Full speed
+    motorL_pwm.ChangeDutyCycle(17)  # Adjust duty cycle to control speed
     time.sleep(0.1)
 
 def FullSpeed():
@@ -64,7 +64,7 @@ try:
             print("Right Sensor - Line detected")
             TurnLeft()
         else:
-            MidSpeed()
+            LowSpeed()
         time.sleep(0.1)  # Adjust the sleep time as needed
 
 except KeyboardInterrupt:
