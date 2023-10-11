@@ -21,18 +21,26 @@ motorR_pwm.start(0)
 motorL_pwm.start(0)
 
 def TurnRight():
-    motorR_pwm.ChangeDutyCycle(50)  # Adjust duty cycle to control speed
+    motorR_pwm.ChangeDutyCycle(25)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(100)  # Full speed
     time.sleep(0.1)
 
 def TurnLeft():
     motorR_pwm.ChangeDutyCycle(100)  # Full speed
-    motorL_pwm.ChangeDutyCycle(50)  # Adjust duty cycle to control speed
+    motorL_pwm.ChangeDutyCycle(25)  # Adjust duty cycle to control speed
     time.sleep(0.1)
 
-def DriveForward():
+def FullSpeed():
     motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
+    time.sleep(0.1)
+def MidSpeed():
+    motorR_pwm.ChangeDutyCycle(66)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(66)  # Full speed for the left motor
+    time.sleep(0.1)
+def LowSpeed():
+    motorR_pwm.ChangeDutyCycle(33)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(33)  # Full speed for the left motor
     time.sleep(0.1)
 
 def StopDriving():
@@ -42,7 +50,18 @@ def StopDriving():
 
 try:
     while True:
-        DriveForward()
+        time.sleep(3)
+        FullSpeed()
+        time.sleep(3)
+        MidSpeed()
+        time.sleep(3)
+        LowSpeed()
+        time.sleep(3)
+        TurnLeft()
+        time.sleep(3)
+        TurnRight()
+        time.sleep(3)
+        StopDriving()
 
 except KeyboardInterrupt:
     pass
