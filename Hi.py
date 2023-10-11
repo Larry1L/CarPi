@@ -63,7 +63,7 @@ try:
         if GPIO.input(sensorR_pin) == GPIO.LOW:
             print("Right Sensor - Line detected")
             TurnLeft()
-        if GPIO.input(sensorR_pin, sensorL_pin) == GPIO.HIGH:
+        else:
             MidSpeed()
         time.sleep(0.1)  # Adjust the sleep time as needed
 
