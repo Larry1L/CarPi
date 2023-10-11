@@ -36,7 +36,7 @@ def DriveForward():
         print("Driving Forward")
 
 try:
-    DriveForward()
+    TurnLeft():
 
 except KeyboardInterrupt:
     pass
