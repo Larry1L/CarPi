@@ -59,9 +59,11 @@ def toggle_pause():
         paused = True
         StopDriving()
 
+
 # Wait for user to press Enter
 input("Press Enter to start...")
 try:
+    input("Press Spacebar to pause...")
     FullSpeed()
     while True:
         if GPIO.input(sensorL_pin) == GPIO.LOW:
