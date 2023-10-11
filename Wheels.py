@@ -1,8 +1,12 @@
 from gpiozero import Servo
-from time import sleep
+import time
+
+# Use the pigpio pin factory for servo control
+from gpiozero.pins.pigpio import PiGPIOFactory
+factory = PiGPIOFactory()
 
 # Create a Servo object and specify the GPIO pin where your servo is connected
-servo = Servo(8)  # Adjust the GPIO pin (17) to match your setup
+servo = Servo(17, pin_factory=factory)  # Adjust the GPIO pin (17) to match your setup
 
 # Define the angle for forward and backward positions
 forward_angle = 90
@@ -12,11 +16,11 @@ try:
     while True:
         # Move the servo forward for 2 seconds
         servo.value = forward_angle / 180.0
-        sleep(2)
+        time.sleep(2)
 
         # Move the servo backward for 3 seconds
         servo.value = backward_angle / 180.0
-        sleep(3)
+        time.sleep(3)
 
 except KeyboardInterrupt:
     pass
