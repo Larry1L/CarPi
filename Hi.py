@@ -28,32 +28,36 @@ motorL_pwm.start(0)
 
 def TurnRight():
     motorR_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
-    motorL_pwm.ChangeDutyCycle(40)  # Full speed
-    time.sleep(0.1)
+    motorL_pwm.ChangeDutyCycle(100)  # Full speed
 
 def TurnLeft():
-    motorR_pwm.ChangeDutyCycle(40)  # Full speed
+    motorR_pwm.ChangeDutyCycle(100)  # Full speed
     motorL_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
-    time.sleep(0.1)
 
 def FullSpeed():
     motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
-    time.sleep(0.1)
 def MidSpeed():
     motorR_pwm.ChangeDutyCycle(66)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(66)  # Full speed for the left motor
-    time.sleep(0.1)
 def LowSpeed():
     motorR_pwm.ChangeDutyCycle(40)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(40)  # Full speed for the left motor
-    time.sleep(0.1)
 
 def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
     motorL_pwm.ChangeDutyCycle(0)
     time.sleep(1)
-
+# Function to pause and resume the program
+def toggle_pause():
+    global paused
+    if paused:
+        print("Resuming...")
+        paused = False
+    else:
+        print("Paused. Press Enter to resume.")
+        paused = True
+        StopDriving()
 
 # Wait for user to press Enter
 input("Press Enter to start...")
