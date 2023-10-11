@@ -34,6 +34,10 @@ def DriveForward():
     motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
     time.sleep(0.1)
+def DriveBack():
+    motorR_pwm.ChangeDutyCycle(-100)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(-100)  # Full speed for the left motor
+    time.sleep(0.1)
 
 def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
@@ -42,7 +46,7 @@ def StopDriving():
 
 try:
     while True:
-        TurnLeft()
+        DriveBack()
 
 except KeyboardInterrupt:
     pass
