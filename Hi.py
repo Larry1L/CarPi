@@ -55,8 +55,7 @@ try:
         if GPIO.input(sensorR_pin) == GPIO.LOW:
             print("Right Sensor - Line detected")
             TurnLeft()
-        else
-        FullSpeed()
+        
         
         # Check for arrow key presses
         if keyboard.is_pressed('left'):
@@ -67,7 +66,8 @@ try:
             FullSpeed()
         elif keyboard.is_pressed('down'):
             StopDriving()
-        
+        else:
+        FullSpeed()
         time.sleep(0.1)  # Adjust the sleep time as needed
 
 except KeyboardInterrupt:
