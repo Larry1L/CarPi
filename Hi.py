@@ -37,7 +37,6 @@ try:
             print("No line detected")
         time.sleep(0.1)  # Adjust the sleep time as needed
 
-
 def TurnRight():
     motorR_pwm.ChangeDutyCycle(25)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(100)  # Full speed
