@@ -67,9 +67,6 @@ def DriveBackwards(): # Function to stop driving
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
 
-# Wait for the user to press Enter to start
-input("Press Enter to start...")
-
 try:
     
     while True:
