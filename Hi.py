@@ -30,7 +30,7 @@ motorR_pwm.start(0)
 motorL_pwm.start(0)
 
 def TurnRight():
-    GPIO.output(DirL_pin, GPIO.LOW)
+    GPIO.output(DirL_pin, GPIO.HIGH)
     motorR_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(33)  # Full speed
 
