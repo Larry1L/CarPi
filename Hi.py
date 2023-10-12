@@ -50,7 +50,7 @@ def FullSpeed(speed=90): # Function for driving forward and making sure none of 
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
     print("Driving forward")
 def FullSpeed2(): # Starting speed to go as fast as possible until the car hits something
-    FullSpeed(75)
+    FullSpeed(50)
     print("Starting Motors")
 def StopDriving(): # Function to stop driving
     motorR_pwm.ChangeDutyCycle(0)
