@@ -67,7 +67,7 @@ def check_keypress():
 input("Press Enter to start...")
 
 try:
-    FullSpeed2()
+    check_keypress()
     
     while True:
         check_keypress()  # Check for key presses
@@ -82,7 +82,7 @@ try:
             print("Right Sensor - Line detected")
             TurnLeft()
         else:
-            FullSpeed()
+            check_keypress()
 
 except KeyboardInterrupt:
     pass
