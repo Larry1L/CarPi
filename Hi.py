@@ -1,13 +1,13 @@
-import RPi.GPIO as GPIO
-import time
+import RPi.GPIO as GPIO # Raspberry GPIO library
+import time # Time library allowing for delays in the code
 
 # Set the GPIO pin numbers (pin 8 & 14)
-motorR_pin = 8
-motorL_pin = 14
-DirR_pin = 27 
-DirL_pin = 22
-sensorL_pin = 4  # Example GPIO pin, adjust to your setup
-sensorR_pin = 17  # Example GPIO pin, adjust to your setup
+motorR_pin = 8 # Left motors pin
+motorL_pin = 14 # Right motors pin
+DirR_pin = 27 # Right motors direction pin
+DirL_pin = 22 # Left motors direction pin
+sensorL_pin = 4  # GPIO pin for the left sensor
+sensorR_pin = 17  # GPIO pin for the right sensor
 
 # Configure the GPIO mode
 GPIO.setmode(GPIO.BCM)
@@ -18,61 +18,61 @@ GPIO.setup(motorL_pin, GPIO.OUT)
 GPIO.setup(DirR_pin, GPIO.OUT)
 GPIO.setup(DirL_pin, GPIO.OUT)
 # Set up the sensor pins as inputs
-GPIO.setup(sensorL_pin, GPIO.IN)
+GPIO.setup(sensorL_pin, GPIO.IN) 
 GPIO.setup(sensorR_pin, GPIO.IN)
 
 # Create PWM instances for the left and right motors
-motorR_pwm = GPIO.PWM(motorR_pin, 100)  # PWM frequency (Hz)
+motorR_pwm = GPIO.PWM(motorR_pin, 100)  # PWM Speed (%)
 motorL_pwm = GPIO.PWM(motorL_pin, 100)
 
 # Start PWM with 0% duty cycle (stopped)
 motorR_pwm.start(0)
 motorL_pwm.start(0)
 
-def TurnRight():
+def TurnRight(): # Function for the car to turn right by making the left wheel drive backwards faster than the right wheel drives forward
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(90)  # Full speed
 
-def TurnLeft():
+def TurnLeft(): # Function for the car to turn left by making the right wheel drive backwards faster than the left wheel drives forward
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(90)  # Full speed
     motorL_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
 
-def FullSpeed():
+def FullSpeed(): # Function for driving forward and making sure none of the wheels are backwards
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(33)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(33)  # Full speed for the left motor
-def FullSpeed2():
+def FullSpeed2(): # Starting speed to go as fast as possible until the car hits something
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(100)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(100)  # Full speed for the left motor
 
-def StopDriving():
-    motorR_pwm.ChangeDutyCycle(0)  # Stop
+def StopDriving(): # Function to stop driving
+    motorR_pwm.ChangeDutyCycle(0)
     motorL_pwm.ChangeDutyCycle(0)
 
 # Wait for the user to press Enter to start
 input("Press Enter to start...")
 
-FullSpeed2()
-
 try:
+    FullSpeed2()
+    
     while True:
         if GPIO.input(sensorL_pin) == GPIO.LOW:
-            print("Left Sensor - Line detected")
+            print("Left Sensor - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnRight()
         elif GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Right Sensor - Line detected")
+            print("Right Sensor - Line detected") # The right sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnLeft()
         else:
-            FullSpeed()
+            FullSpeed() # None of the sensors detect anything, allowing the car to drive forward
 
-except KeyboardInterrupt:
+except KeyboardInterrupt: # Emergency terminal stop button ( CTRL + C )
     pass
 
 finally:
