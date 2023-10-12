@@ -63,3 +63,14 @@ def press(key):
 
 while True:
     listen_keyboard(on_press = press)
+    
+    if key == "w":
+        FullSpeed()
+    elif key == "s":
+        GoBackward()
+    elif key == "a":
+        TurnLeft()
+    elif key == "d":
+        TurnRight()
+    else
+        time.sleep(0.1)
