@@ -44,6 +44,7 @@ try:
     while True:
         if keyboard.is_pressed('w'):
             FullSpeed()
+            print("w")
         elif keyboard.is_pressed('a'):
             TurnLeft()
         elif keyboard.is_pressed('d'):
