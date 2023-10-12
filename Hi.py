@@ -32,20 +32,25 @@ motorL_pwm.start(0)
 def TurnRight():
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
-    motorL_pwm.ChangeDutyCycle(33)  # Full speed
+    motorR_pwm.ChangeDutyCycle(15)  # Adjust duty cycle to control speed
+    motorL_pwm.ChangeDutyCycle(15)  # Full speed
 
 def TurnLeft():
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(33)  # Full speed
-    motorL_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
+    motorR_pwm.ChangeDutyCycle(15)  # Full speed
+    motorL_pwm.ChangeDutyCycle(15)  # Adjust duty cycle to control speed
 
 def FullSpeed():
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(33)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(33)  # Full speed for the left motor
+    motorR_pwm.ChangeDutyCycle(15)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(15)  # Full speed for the left motor
+def FullSpeed2():
+    GPIO.output(DirL_pin, GPIO.LOW)
+    GPIO.output(DirR_pin, GPIO.LOW)
+    motorR_pwm.ChangeDutyCycle(50)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(50)  # Full speed for the left motor
 
 def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)  # Stop
@@ -54,7 +59,7 @@ def StopDriving():
 # Wait for the user to press Enter to start
 input("Press Enter to start...")
 
-FullSpeed()
+FullSpeed2()
 
 try:
     while True:
