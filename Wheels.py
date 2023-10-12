@@ -1,4 +1,4 @@
-import keyboard
+from sshlibrary import keyboard
 
 def on_key_event(e):
     if e.name in ['w', 'a', 's', 'd']:
