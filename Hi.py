@@ -60,7 +60,7 @@ def StopDriving(): # Function to stop driving
 input("Press Enter to start...")
 
 try:
-    FullSpeed2()
+    FullSpeed()
     
     while True:
         if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
@@ -73,7 +73,7 @@ try:
             print("Right Sensor - Line detected") # The right sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnLeft()
         else:
-            FullSpeed2() # None of the sensors detect anything, allowing the car to drive forward
+            FullSpeed() # None of the sensors detect anything, allowing the car to drive forward
 
 except KeyboardInterrupt: # Emergency terminal stop button ( CTRL + C )
     pass
