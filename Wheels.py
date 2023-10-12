@@ -72,5 +72,5 @@ while True:
         TurnLeft()
     elif key == "d":
         TurnRight()
-    else
+    else:
         time.sleep(0.1)
