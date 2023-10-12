@@ -26,28 +26,28 @@ def TurnRight(speed=100):
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(0)
-    motorL_pwm.ChangeDutyCycle(speed)
+    motorL_pwm.ChangeDutyCycle(100)
     print("Turning Right")
 
 def TurnLeft(speed=90):
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)
+    motorR_pwm.ChangeDutyCycle(100)
     motorL_pwm.ChangeDutyCycle(0)
     print("Turning Left")
 
 def FullSpeed(speed=100):
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)
-    motorL_pwm.ChangeDutyCycle(speed)
+    motorR_pwm.ChangeDutyCycle(100)
+    motorL_pwm.ChangeDutyCycle(100)
     print("Going Full Speed")
 
 def GoBackward(speed=100):
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.HIGH)
-    motorR_pwm.ChangeDutyCycle(speed)
-    motorL_pwm.ChangeDutyCycle(speed)
+    motorR_pwm.ChangeDutyCycle(100)
+    motorL_pwm.ChangeDutyCycle(100)
     print("Going Backward")
 
 # Define a simple function to handle key presses
