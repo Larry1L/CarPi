@@ -22,7 +22,7 @@ motorR_pwm = GPIO.PWM(motorR_pin, 100)
 motorL_pwm = GPIO.PWM(motorL_pin, 100)
 
 motorR_pwm.start(0)
-motorL_pwm.star
+motorL_pwm.start(0)
 
 # ... (your previous code for setup and functions)
 def TurnRight(speed=90):
