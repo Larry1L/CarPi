@@ -63,7 +63,6 @@ try:
     FullSpeed2()
     
     while True:
-        FullSpeed()
         if GPIO.input(sensorL_pin) == GPIO.LOW:
             print("Left Sensor - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnRight()
