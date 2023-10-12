@@ -52,33 +52,33 @@ def FullSpeed(speed=65): # Function for driving forward and making sure none of 
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
-def FullSpeed2(): # Starting speed to go as fast as possible until the car hits something
-    FullSpeed(100)
-    print("Starting Motors")
 def StopDriving(): # Function to stop driving
     motorR_pwm.ChangeDutyCycle(0)
     motorL_pwm.ChangeDutyCycle(0)
     print("Stopping Motors")
+def DriveBackwards(): # Function to stop driving
+    GPIO.output(DirL_pin, GPIO.LOW)
+    GPIO.output(DirR_pin, GPIO.LOW)
+    motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
 
 # Wait for the user to press Enter to start
 input("Press Enter to start...")
 
 try:
-    FullSpeed()
     
     while True:
         listen_keyboard(on_press = press)
-        if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Both sensors - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
+        if keyboard.is_pressed('w'):
             FullSpeed()
-        elif GPIO.input(sensorL_pin) == GPIO.LOW:
-            print("Left Sensor - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
-            TurnRight()
-        elif GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Right Sensor - Line detected") # The right sensor reacts to the white line on the ground, turning right to not exit the ring
+        elif keyboard.is_pressed('a'):
             TurnLeft()
-        else:
-            FullSpeed() # None of the sensors detect anything, allowing the car to drive forward
+        elif keyboard.is_pressed('s'):
+            DriveBackwards()
+        elif keyboard.is_pressed('d'):
+            TurnRight()
+        else
+            StopDriving()
 
 except KeyboardInterrupt: # Emergency terminal stop button ( CTRL + C )
     pass
