@@ -40,23 +40,19 @@ def StopDriving():
     GPIO.output(motorR_pin1, GPIO.LOW)
     GPIO.output(motorR_pin2, GPIO.LOW)
 
-# Listen for keyboard input
-@listen_to('keydown', ['w', 'a', 's', 'd'])
-def on_key(event):
-    if event.key == 'w':
-        FullSpeed()
-    elif event.key == 'a':
-        TurnLeft()
-    elif event.key == 'd':
-        TurnRight()
-    elif event.key == 's':
-        StopDriving()
-
 try:
     while True:
-        time.sleep(0.1)  # Keep the program running
+        if keyboard.is_pressed('w'):
+            FullSpeed()
+        elif keyboard.is_pressed('a'):
+            TurnLeft()
+        elif keyboard.is_pressed('d'):
+            TurnRight()
+        else:
+            StopDriving()
+        time.sleep(0.1)
 except KeyboardInterrupt:
     pass
 finally:
-    StopDriving()  # Stop the motors
-    GPIO.cleanup()  # Cleanup GPIO pins
+    StopDriving()
+    GPIO.cleanup()
