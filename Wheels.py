@@ -66,7 +66,7 @@ def on_key_press(key):
 
 while True:
     listen_keyboard(on_press=on_key_press)
-        if key == 'w':
+    if key == 'w':
         FullSpeed()
     elif key == 's':
         GoBackward()
