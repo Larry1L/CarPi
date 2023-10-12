@@ -31,17 +31,17 @@ motorL_pwm.start(0)
 
 def TurnRight():
     GPIO.output(DirL_pin, GPIO.HIGH)
-    motorR_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
+    motorR_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(33)  # Full speed
 
 def TurnLeft():
-    GPIO.output(DirR_pin, GPIO.LOW)
+    GPIO.output(DirR_pin, GPIO.HIGH)
     motorR_pwm.ChangeDutyCycle(33)  # Full speed
-    motorL_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
+    motorL_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
 
 def FullSpeed():
-    GPIO.output(DirL_pin, GPIO.HIGH)
-    GPIO.output(DirR_pin, GPIO.HIGH)
+    GPIO.output(DirL_pin, GPIO.LOW)
+    GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(33)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(33)  # Full speed for the left motor
 
@@ -64,9 +64,6 @@ try:
             TurnLeft()
         else:
             FullSpeed()
-
-        
-        time.sleep(0.1)  # Adjust the sleep time as needed
 
 except KeyboardInterrupt:
     pass
