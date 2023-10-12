@@ -33,12 +33,12 @@ def TurnRight(): # Function for the car to turn right by making the left wheel d
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(60)  # Adjust duty cycle to control speed
-    motorL_pwm.ChangeDutyCycle(30)  # Full speed
+    motorL_pwm.ChangeDutyCycle(60)  # Full speed
 
 def TurnLeft(): # Function for the car to turn left by making the right wheel drive backwards faster than the left wheel drives forward
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(30)  # Full speed
+    motorR_pwm.ChangeDutyCycle(60)  # Full speed
     motorL_pwm.ChangeDutyCycle(60)  # Adjust duty cycle to control speed
 
 def FullSpeed(): # Function for driving forward and making sure none of the wheels are backwards
@@ -63,6 +63,9 @@ try:
     FullSpeed2()
     
     while True:
+        if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
+            print("Left Sensor - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
+            FullSpeed()
         if GPIO.input(sensorL_pin) == GPIO.LOW:
             print("Left Sensor - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnRight()
