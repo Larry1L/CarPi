@@ -34,23 +34,28 @@ def TurnRight(speed=90): # Function for the car to turn right by making the left
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed
+    print("Turning Right")
 
 def TurnLeft(speed=90): # Function for the car to turn left by making the right wheel drive backwards faster than the left wheel drives forward
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed
     motorL_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
+    print("Turning Left")
 
 def FullSpeed(speed=60): # Function for driving forward and making sure none of the wheels are backwards
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
+    print("Driving forward")
 def FullSpeed2(): # Starting speed to go as fast as possible until the car hits something
     FullSpeed(100)
+    print("Starting Motors")
 def StopDriving(): # Function to stop driving
     motorR_pwm.ChangeDutyCycle(0)
     motorL_pwm.ChangeDutyCycle(0)
+    print("Stopping Motors")
 
 # Wait for the user to press Enter to start
 input("Press Enter to start...")
@@ -62,7 +67,7 @@ try:
         if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
             print("Both sensors - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
             FullSpeed()
-        if GPIO.input(sensorL_pin) == GPIO.LOW:
+        elif GPIO.input(sensorL_pin) == GPIO.LOW:
             print("Left Sensor - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnRight()
         elif GPIO.input(sensorR_pin) == GPIO.LOW:
