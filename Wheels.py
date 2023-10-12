@@ -42,7 +42,7 @@ def FullSpeed(speed=33):
     motorL_pwm.ChangeDutyCycle(speed)
 
 def FullSpeed2():
-    FullSpeed(100)  # Full speed for both motors
+    FullSpeed(50)  # Full speed for both motors
 
 def StopDriving():
     motorR_pwm.ChangeDutyCycle(0)
