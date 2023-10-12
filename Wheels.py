@@ -22,6 +22,11 @@ GPIO.setup(DirL_pin, GPIO.OUT)
 motorR_pwm = GPIO.PWM(motorR_pin, 1000)
 motorL_pwm = GPIO.PWM(motorL_pin, 1000)
 
+# Start PWM with 0% duty cycle (stopped)
+motorR_pwm.start(0)
+motorL_pwm.start(0)
+
+
 # Define motor control functions
 def TurnRight(speed=100):
     GPIO.output(DirL_pin, GPIO.HIGH)
