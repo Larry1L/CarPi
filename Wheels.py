@@ -52,6 +52,11 @@ def FullSpeed(speed=100): # Function for driving forward and making sure none of
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
+def SlowSpeed(speed=20): # Function for driving forward and making sure none of the wheels are backwards
+    GPIO.output(DirL_pin, GPIO.LOW)
+    GPIO.output(DirR_pin, GPIO.LOW)
+    motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
 def StopDriving(): # Function to stop driving
     motorR_pwm.ChangeDutyCycle(0)
     motorL_pwm.ChangeDutyCycle(0)
@@ -77,8 +82,8 @@ try:
             DriveBackwards()
         elif keyboard.is_pressed('d'):
             TurnRight()
-                else:
-            StopDriving()
+        else:
+            SlowSpeed()
 
 except KeyboardInterrupt: # Emergency terminal stop button ( CTRL + C )
     pass
