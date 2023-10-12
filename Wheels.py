@@ -1,9 +1,30 @@
-from sshlibrary import keyboard
+#Run this command to install library
+#python3 -m pip install sshkeyboard 
 
-def on_key_event(e):
-    if e.name in ['w', 'a', 's', 'd']:
-        print("test")
+from sshkeyboard import listen_keyboard
 
-keyboard.on_press(on_key_event)
+def TurnLeft():
+    print("Turning Left")
 
-keyboard.wait()
+def TurnRight():
+    print("Turning Right")
+
+def GoForward():
+    print("Going Forward")
+
+def GoBackward():
+    print("reversing")
+
+def press(key):
+    if key == "w":
+        GoForward()
+    if key == "s":
+        GoBackward()
+    if key == "a":
+        TurnLeft()
+    if key == "d":
+        TurnRight()
+
+
+while True:
+    listen_keyboard(on_press = press)
