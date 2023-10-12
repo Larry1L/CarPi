@@ -1,48 +1,75 @@
 import RPi.GPIO as GPIO
 import time
 
-# Set the GPIO pin numbers (pin 8 & 14)
 motorR_pin = 8
 motorL_pin = 14
+DirR_pin = 27
+DirL_pin = 22
+sensorL_pin = 4
+sensorR_pin = 17
 
-# Configure the GPIO mode
 GPIO.setmode(GPIO.BCM)
 
-# Set up the motor pins as an output
 GPIO.setup(motorR_pin, GPIO.OUT)
 GPIO.setup(motorL_pin, GPIO.OUT)
+GPIO.setup(DirR_pin, GPIO.OUT)
+GPIO.setup(DirL_pin, GPIO.OUT)
+GPIO.setup(sensorL_pin, GPIO.IN)
+GPIO.setup(sensorR_pin, GPIO.IN)
 
-def TurnRight():
-    while True:  # Loop indefinitely
-        GPIO.output(motorR_pin, GPIO.HIGH)  # Start the motor
-        time.sleep(0.1)  # Run the motor for 0.1 seconds
-        print("Turning Right")
-        GPIO.output(motorL_pin, GPIO.LOW)  # Stop the motor
-        time.sleep(0.1)  # Wait for 0.1 seconds
+motorR_pwm = GPIO.PWM(motorR_pin, 100)
+motorL_pwm = GPIO.PWM(motorL_pin, 100)
 
-def TurnLeft():
-    while True:  # Loop indefinitely
-        GPIO.output(motorL_pin, GPIO.HIGH)  # Start the motor
-        time.sleep(0.1)  # Run the motor for 0.1 seconds
-        print("Turning Left")
-        GPIO.output(motorR_pin, GPIO.LOW)  # Start the motor
-        time.sleep(0.1)  # Run the motor for 0.1 seconds
-        print("Turning Left")
+motorR_pwm.start(0)
+motorL_pwm.start(0)
 
+def TurnRight(speed=90):
+    GPIO.output(DirL_pin, GPIO.HIGH)
+    GPIO.output(DirR_pin, GPIO.LOW)
+    motorR_pwm.ChangeDutyCycle(33)  # Right motor goes forward
+    motorL_pwm.ChangeDutyCycle(speed)
 
-def DriveForward():
-    while True:  # Loop indefinitely
-        GPIO.output(motorL_pin, GPIO.HIGH)  # Start the left motor
-        GPIO.output(motorR_pin, GPIO.HIGH)  # Start the right motor
-        time.sleep(0.1)  # Run both motors for 0.1 seconds
-        print("Driving Forward")
+def TurnLeft(speed=90):
+    GPIO.output(DirR_pin, GPIO.HIGH)
+    GPIO.output(DirL_pin, GPIO.LOW)
+    motorR_pwm.ChangeDutyCycle(speed)
+    motorL_pwm.ChangeDutyCycle(33)  # Left motor goes forward
+
+def FullSpeed(speed=33):
+    GPIO.output(DirL_pin, GPIO.LOW)
+    GPIO.output(DirR_pin, GPIO.LOW)
+    motorR_pwm.ChangeDutyCycle(speed)
+    motorL_pwm.ChangeDutyCycle(speed)
+
+def FullSpeed2():
+    FullSpeed(100)  # Full speed for both motors
+
+def StopDriving():
+    motorR_pwm.ChangeDutyCycle(0)
+    motorL_pwm.ChangeDutyCycle(0)
+
+input("Press Enter to start...")
 
 try:
-    TurnRight()
+    FullSpeed2()
+    
+    while True:
+        if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
+            print("Both Sensors - Line detected")
+            FullSpeed()
+        elif GPIO.input(sensorL_pin) == GPIO.LOW:
+            print("Left Sensor - Line detected")
+            TurnRight()
+        elif GPIO.input(sensorR_pin) == GPIO.LOW:
+            print("Right Sensor - Line detected")
+            TurnLeft()
+        else:
+            FullSpeed2()
 
 except KeyboardInterrupt:
     pass
 
 finally:
-    # Clean up GPIO settings
+    motorR_pwm.stop()
+    motorL_pwm.stop()
     GPIO.cleanup()
