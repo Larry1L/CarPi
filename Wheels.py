@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from sshkeyboard import keyboard
+import keyboard
 import time
 
 # Define GPIO pin numbers for your motors
