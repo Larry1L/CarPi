@@ -64,5 +64,6 @@ def press(key):
 
 while True:
     listen_keyboard(on_press = press)
+    FullSpeed()
 
 # You can add cleanup and exit code here if needed
