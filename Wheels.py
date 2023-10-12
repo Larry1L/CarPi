@@ -21,6 +21,7 @@ GPIO.setup(DirL_pin, GPIO.OUT)
 motorR_pwm = GPIO.PWM(motorR_pin, 100)
 motorL_pwm = GPIO.PWM(motorL_pin, 100)
 
+# Define motor control functions
 def TurnRight(speed=100):
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
@@ -49,16 +50,21 @@ def GoBackward(speed=100):
     motorL_pwm.ChangeDutyCycle(speed)
     print("Going Backward")
 
-while True:
-    listen_keyboard()
-    if listen_keyboard('w'):
+# Define a simple function to handle key presses
+def on_key_press(key):
+    if key == 'w':
         FullSpeed()
-    elif listen_keyboard('s'):
+    elif key == 's':
         GoBackward()
-    elif listen_keyboard('a'):
+    elif key == 'a':
         TurnLeft()
-    elif listen_keyboard('d'):
+    elif key == 'd':
         TurnRight()
     else:
         motorR_pwm.ChangeDutyCycle(0)
         motorL_pwm.ChangeDutyCycle(0)
+
+while True:
+    listen_keyboard(on_press=on_key_press)
+
+# You can add cleanup and exit code here if needed
