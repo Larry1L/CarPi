@@ -61,8 +61,8 @@ def on_key_press(key):
     elif key == 'd':
         TurnRight()
     else:
-        motorR_pwm.ChangeDutyCycle(0)
-        motorL_pwm.ChangeDutyCycle(0)
+        motorR_pwm.ChangeDutyCycle(50)
+        motorL_pwm.ChangeDutyCycle(50)
 
 while True:
     listen_keyboard(on_press=on_key_press)
