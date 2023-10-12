@@ -1,15 +1,12 @@
-#Run this command to install library
-#python3 -m pip install sshkeyboard 
-
 from sshkeyboard import listen_keyboard
-import RPi.GPIO as GPIO # Raspberry GPIO library
-import time # Time library allowing for delays in the code
+import RPi.GPIO as GPIO
+import time
 
-# Set the GPIO pin numbers (pin 8 & 14)
-motorR_pin = 8 # Left motors pin
-motorL_pin = 14 # Right motors pin
-DirR_pin = 27 # Right motors direction pin
-DirL_pin = 22 # Left motors direction pin
+# Set the GPIO pin numbers
+motorR_pin = 8
+motorL_pin = 14
+DirR_pin = 27
+DirL_pin = 22
 
 # Configure the GPIO mode
 GPIO.setmode(GPIO.BCM)
@@ -21,56 +18,47 @@ GPIO.setup(DirR_pin, GPIO.OUT)
 GPIO.setup(DirL_pin, GPIO.OUT)
 
 # Create PWM instances for the left and right motors
-motorR_pwm = GPIO.PWM(motorR_pin, 100)  # PWM Speed (%)
+motorR_pwm = GPIO.PWM(motorR_pin, 100)
 motorL_pwm = GPIO.PWM(motorL_pin, 100)
 
-
-def TurnRight(speed=100): # Function for the car to turn right by making the left wheel drive backwards faster than the right wheel drives forward
+def TurnRight(speed=100):
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
-    motorL_pwm.ChangeDutyCycle(speed)  # Full speed
+    motorR_pwm.ChangeDutyCycle(0)
+    motorL_pwm.ChangeDutyCycle(speed)
     print("Turning Right")
 
-def TurnLeft(speed=90): # Function for the car to turn left by making the right wheel drive backwards faster than the left wheel drives forward
+def TurnLeft(speed=90):
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)  # Full speed
-    motorL_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
+    motorR_pwm.ChangeDutyCycle(speed)
+    motorL_pwm.ChangeDutyCycle(0)
     print("Turning Left")
 
-def FullSpeed(speed=100): # Function for driving forward and making sure none of the wheels are backwards
+def FullSpeed(speed=100):
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
-def GoBackward(speed=100): # Function for driving forward and making sure none of the wheels are backwards
+    motorR_pwm.ChangeDutyCycle(speed)
+    motorL_pwm.ChangeDutyCycle(speed)
+    print("Going Full Speed")
+
+def GoBackward(speed=100):
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.HIGH)
-    motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
-
-def press(key):
-    if key == "w":
-        FullSpeed()
-    if key == "s":
-        GoBackward()
-    if key == "a":
-        TurnLeft()
-    if key == "d":
-        TurnRight()
-
+    motorR_pwm.ChangeDutyCycle(speed)
+    motorL_pwm.ChangeDutyCycle(speed)
+    print("Going Backward")
 
 while True:
-    listen_keyboard(on_press = press)
-    
-    if key == "w":
+    listen_keyboard()
+    if listen_keyboard('w'):
         FullSpeed()
-    elif key == "s":
+    elif listen_keyboard('s'):
         GoBackward()
-    elif key == "a":
+    elif listen_keyboard('a'):
         TurnLeft()
-    elif key == "d":
+    elif listen_keyboard('d'):
         TurnRight()
     else:
-        time.sleep(0.1)
+        motorR_pwm.ChangeDutyCycle(0)
+        motorL_pwm.ChangeDutyCycle(0)
