@@ -1,92 +1,58 @@
-#Run this command to install library
-#python3 -m pip install sshkeyboard 
+import RPi.GPIO as GPIO
+import keyboard
+import time
 
-from sshkeyboard import listen_keyboard
-import RPi.GPIO as GPIO # Raspberry GPIO library
-import time # Time library allowing for delays in the code
+# Define GPIO pin numbers for your motors
+motorL_pin1 = 17  # Replace with your actual GPIO pin
+motorL_pin2 = 18  # Replace with your actual GPIO pin
+motorR_pin1 = 19  # Replace with your actual GPIO pin
+motorR_pin2 = 20  # Replace with your actual GPIO pin
 
-# Set the GPIO pin numbers (pin 8 & 14)
-motorR_pin = 8 # Left motors pin
-motorL_pin = 14 # Right motors pin
-DirR_pin = 27 # Right motors direction pin
-DirL_pin = 22 # Left motors direction pin
-sensorL_pin = 4  # GPIO pin for the left sensor
-sensorR_pin = 17  # GPIO pin for the right sensor
-
-# Configure the GPIO mode
+# Configure GPIO pins for motor control
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(motorL_pin1, GPIO.OUT)
+GPIO.setup(motorL_pin2, GPIO.OUT)
+GPIO.setup(motorR_pin1, GPIO.OUT)
+GPIO.setup(motorR_pin2, GPIO.OUT)
 
-# Set up the motor pins as an output
-GPIO.setup(motorR_pin, GPIO.OUT)
-GPIO.setup(motorL_pin, GPIO.OUT)
-GPIO.setup(DirR_pin, GPIO.OUT)
-GPIO.setup(DirL_pin, GPIO.OUT)
-# Set up the sensor pins as inputs
-GPIO.setup(sensorL_pin, GPIO.IN) 
-GPIO.setup(sensorR_pin, GPIO.IN)
+# Define motor control functions (you can modify these as needed)
+def FullSpeed():
+    GPIO.output(motorL_pin1, GPIO.HIGH)
+    GPIO.output(motorL_pin2, GPIO.LOW)
+    GPIO.output(motorR_pin1, GPIO.HIGH)
+    GPIO.output(motorR_pin2, GPIO.LOW)
 
-# Create PWM instances for the left and right motors
-motorR_pwm = GPIO.PWM(motorR_pin, 100)  # PWM Speed (%)
-motorL_pwm = GPIO.PWM(motorL_pin, 100)
+def TurnLeft():
+    GPIO.output(motorL_pin1, GPIO.LOW)
+    GPIO.output(motorL_pin2, GPIO.HIGH)
+    GPIO.output(motorR_pin1, GPIO.HIGH)
+    GPIO.output(motorR_pin2, GPIO.LOW)
 
-# Start PWM with 0% duty cycle (stopped)
-motorR_pwm.start(0)
-motorL_pwm.start(0)
+def TurnRight():
+    GPIO.output(motorL_pin1, GPIO.HIGH)
+    GPIO.output(motorL_pin2, GPIO.LOW)
+    GPIO.output(motorR_pin1, GPIO.LOW)
+    GPIO.output(motorR_pin2, GPIO.HIGH)
 
-def TurnRight(speed=100): # Function for the car to turn right by making the left wheel drive backwards faster than the right wheel drives forward
-    GPIO.output(DirL_pin, GPIO.HIGH)
-    GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
-    motorL_pwm.ChangeDutyCycle(speed)  # Full speed
-    print("Turning Right")
-
-def TurnLeft(speed=90): # Function for the car to turn left by making the right wheel drive backwards faster than the left wheel drives forward
-    GPIO.output(DirR_pin, GPIO.HIGH)
-    GPIO.output(DirL_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)  # Full speed
-    motorL_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
-    print("Turning Left")
-
-def FullSpeed(speed=100): # Function for driving forward and making sure none of the wheels are backwards
-    GPIO.output(DirL_pin, GPIO.LOW)
-    GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
-def SlowSpeed(speed=20): # Function for driving forward and making sure none of the wheels are backwards
-    GPIO.output(DirL_pin, GPIO.LOW)
-    GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
-def StopDriving(): # Function to stop driving
-    motorR_pwm.ChangeDutyCycle(0)
-    motorL_pwm.ChangeDutyCycle(0)
-    print("Stopping Motors")
-def DriveBackwards(): # Function to stop driving
-    GPIO.output(DirL_pin, GPIO.LOW)
-    GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
+def StopDriving():
+    GPIO.output(motorL_pin1, GPIO.LOW)
+    GPIO.output(motorL_pin2, GPIO.LOW)
+    GPIO.output(motorR_pin1, GPIO.LOW)
+    GPIO.output(motorR_pin2, GPIO.LOW)
 
 try:
-    
     while True:
-        listen_keyboard(on_press = press)
         if keyboard.is_pressed('w'):
             FullSpeed()
         elif keyboard.is_pressed('a'):
             TurnLeft()
-        elif keyboard.is_pressed('s'):
-            DriveBackwards()
         elif keyboard.is_pressed('d'):
             TurnRight()
         else:
-            SlowSpeed()
-
-except KeyboardInterrupt: # Emergency terminal stop button ( CTRL + C )
+            StopDriving()
+        time.sleep(0.1)
+except KeyboardInterrupt:
     pass
-
 finally:
-    # Clean up GPIO settings
-    motorR_pwm.stop()
-    motorL_pwm.stop()
+    StopDriving()
     GPIO.cleanup()
