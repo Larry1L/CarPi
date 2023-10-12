@@ -1,34 +1,62 @@
 import RPi.GPIO as GPIO
+from sshkeyboard import listen_to
 import time
 
-# Your setup code here
+# Define GPIO pin numbers for your motors
+motorL_pin1 = 17  # Replace with your actual GPIO pin
+motorL_pin2 = 18  # Replace with your actual GPIO pin
+motorR_pin1 = 19  # Replace with your actual GPIO pin
+motorR_pin2 = 20  # Replace with your actual GPIO pin
 
-input("Press Enter to start...")
-
-# Define GPIO pin numbers for your sensors
-sensorL_pin = 17
-sensorR_pin = 18
-
-# Configure GPIO pins for input
+# Configure GPIO pins for motor control
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(sensorL_pin, GPIO.IN)
-GPIO.setup(sensorR_pin, GPIO.IN)
+GPIO.setup(motorL_pin1, GPIO.OUT)
+GPIO.setup(motorL_pin2, GPIO.OUT)
+GPIO.setup(motorR_pin1, GPIO.OUT)
+GPIO.setup(motorR_pin2, GPIO.OUT)
+
+# Define motor control functions
+def FullSpeed():
+    GPIO.output(motorL_pin1, GPIO.HIGH)
+    GPIO.output(motorL_pin2, GPIO.LOW)
+    GPIO.output(motorR_pin1, GPIO.HIGH)
+    GPIO.output(motorR_pin2, GPIO.LOW)
+
+def TurnLeft():
+    GPIO.output(motorL_pin1, GPIO.LOW)
+    GPIO.output(motorL_pin2, GPIO.HIGH)
+    GPIO.output(motorR_pin1, GPIO.HIGH)
+    GPIO.output(motorR_pin2, GPIO.LOW)
+
+def TurnRight():
+    GPIO.output(motorL_pin1, GPIO.HIGH)
+    GPIO.output(motorL_pin2, GPIO.LOW)
+    GPIO.output(motorR_pin1, GPIO.LOW)
+    GPIO.output(motorR_pin2, GPIO.HIGH)
+
+def StopDriving():
+    GPIO.output(motorL_pin1, GPIO.LOW)
+    GPIO.output(motorL_pin2, GPIO.LOW)
+    GPIO.output(motorR_pin1, GPIO.LOW)
+    GPIO.output(motorR_pin2, GPIO.LOW)
+
+# Listen for keyboard input
+@listen_to('keydown', ['w', 'a', 's', 'd'])
+def on_key(event):
+    if event.key == 'w':
+        FullSpeed()
+    elif event.key == 'a':
+        TurnLeft()
+    elif event.key == 'd':
+        TurnRight()
+    elif event.key == 's':
+        StopDriving()
 
 try:
-    FullSpeed(0)
     while True:
-        if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Both Sensors - Line detected")
-            FullSpeed()
-        elif GPIO.input(sensorL_pin) == GPIO.LOW:
-            print("Left Sensor - Line detected")
-            TurnRight()
-        elif GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Right Sensor - Line detected")
-            TurnLeft()
+        time.sleep(0.1)  # Keep the program running
 except KeyboardInterrupt:
     pass
 finally:
-    motorR_pwm.stop()
-    motorL_pwm.stop()
-    GPIO.cleanup()
+    StopDriving()  # Stop the motors
+    GPIO.cleanup()  # Cleanup GPIO pins
