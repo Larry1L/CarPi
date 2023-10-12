@@ -33,19 +33,19 @@ def TurnRight():
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
-    motorL_pwm.ChangeDutyCycle(50)  # Full speed
+    motorL_pwm.ChangeDutyCycle(70)  # Full speed
 
 def TurnLeft():
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(50)  # Full speed
+    motorR_pwm.ChangeDutyCycle(70)  # Full speed
     motorL_pwm.ChangeDutyCycle(33)  # Adjust duty cycle to control speed
 
 def FullSpeed():
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(25)  # Full speed for the right motor
-    motorL_pwm.ChangeDutyCycle(25)  # Full speed for the left motor
+    motorR_pwm.ChangeDutyCycle(33)  # Full speed for the right motor
+    motorL_pwm.ChangeDutyCycle(33)  # Full speed for the left motor
 def FullSpeed2():
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
