@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-from pynput import keyboard
 
 # Your setup code here
 
@@ -17,6 +16,15 @@ def on_key_release(key):
         TurnRight()
     elif key.char == 's':
         StopDriving()
+
+# Define GPIO pin numbers for your sensors
+sensorL_pin = 17
+sensorR_pin = 18
+
+# Configure GPIO pins for input
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(sensorL_pin, GPIO.IN)
+GPIO.setup(sensorR_pin, GPIO.IN)
 
 # Listen for key releases
 with keyboard.Listener(on_release=on_key_release) as listener:
