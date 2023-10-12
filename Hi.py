@@ -48,9 +48,8 @@ def FullSpeed(speed=70): # Function for driving forward and making sure none of 
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed for the left motor
-    print("Driving forward")
 def FullSpeed2(): # Starting speed to go as fast as possible until the car hits something
-    FullSpeed(50)
+    FullSpeed(100)
     print("Starting Motors")
 def StopDriving(): # Function to stop driving
     motorR_pwm.ChangeDutyCycle(0)
