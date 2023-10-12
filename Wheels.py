@@ -10,6 +10,7 @@ DirL_pin = 22
 
 # Configure the GPIO mode
 GPIO.setmode(GPIO.BCM)
+GPIO.cleanup()
 
 # Set up the motor pins as an output
 GPIO.setup(motorR_pin, GPIO.OUT)
