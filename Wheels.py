@@ -47,7 +47,7 @@ def TurnLeft(speed=90): # Function for the car to turn left by making the right 
     motorL_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
     print("Turning Left")
 
-def FullSpeed(speed=65): # Function for driving forward and making sure none of the wheels are backwards
+def FullSpeed(speed=100): # Function for driving forward and making sure none of the wheels are backwards
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed for the right motor
@@ -77,7 +77,7 @@ try:
             DriveBackwards()
         elif keyboard.is_pressed('d'):
             TurnRight()
-        else
+                else:
             StopDriving()
 
 except KeyboardInterrupt: # Emergency terminal stop button ( CTRL + C )
