@@ -21,7 +21,7 @@ def on_key_release(key):
 # Listen for key releases
 with keyboard.Listener(on_release=on_key_release) as listener:
     try:
-       FullSpeed(0)
+        FullSpeed(0)
         while True:
             if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
                 print("Both Sensors - Line detected")
