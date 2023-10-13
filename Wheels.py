@@ -28,28 +28,28 @@ motorL_pwm.start(0)
 
 
 # Define motor control functions
-def TurnLeft(speed=100):
+def TurnLeft(speed=1000):
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed * 0.25)
     motorL_pwm.ChangeDutyCycle(speed)
     print("Turning Right")
 
-def TurnRight(speed=100):
+def TurnRight(speed=1000):
     GPIO.output(DirR_pin, GPIO.LOW)
     GPIO.output(DirL_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)
     motorL_pwm.ChangeDutyCycle(speed * 0.25)
     print("Turning Left")
 
-def FullSpeed(speed=100):
+def FullSpeed(speed=1000):
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)
     motorL_pwm.ChangeDutyCycle(speed)
     print("Going Full Speed")
 
-def GoBackward(speed=100):
+def GoBackward(speed=1000):
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.HIGH)
     motorR_pwm.ChangeDutyCycle(speed)
