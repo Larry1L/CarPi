@@ -29,13 +29,13 @@ motorL_pwm = GPIO.PWM(motorL_pin, 100)
 motorR_pwm.start(0)
 motorL_pwm.start(0)
 
-def TurnRight(speed=60): # Function for the car to turn right by making the left wheel drive backwards faster than the right wheel drives forward
+def TurnRight(speed=100): # Function for the car to turn right by making the left wheel drive backwards faster than the right wheel drives forward
     GPIO.output(DirL_pin, GPIO.HIGH)
     GPIO.output(DirR_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(0)  # Adjust duty cycle to control speed
     motorL_pwm.ChangeDutyCycle(speed)  # Full speed
 
-def TurnLeft(speed=60): # Function for the car to turn left by making the right wheel drive backwards faster than the left wheel drives forward
+def TurnLeft(speed=100): # Function for the car to turn left by making the right wheel drive backwards faster than the left wheel drives forward
     GPIO.output(DirR_pin, GPIO.HIGH)
     GPIO.output(DirL_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)  # Full speed
