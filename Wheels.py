@@ -31,7 +31,7 @@ motorL_pwm.start(0)
 def TurnLeft(speed=100):
     GPIO.output(DirL_pin, GPIO.LOW)
     GPIO.output(DirR_pin, GPIO.LOW)
-    motorR_pwm.ChangeDutyCycle(speed * 0.75)
+    motorR_pwm.ChangeDutyCycle(speed * 0.25)
     motorL_pwm.ChangeDutyCycle(speed)
     print("Turning Right")
 
@@ -39,7 +39,7 @@ def TurnRight(speed=100):
     GPIO.output(DirR_pin, GPIO.LOW)
     GPIO.output(DirL_pin, GPIO.LOW)
     motorR_pwm.ChangeDutyCycle(speed)
-    motorL_pwm.ChangeDutyCycle(speed * 0.75)
+    motorL_pwm.ChangeDutyCycle(speed * 0.25)
     print("Turning Left")
 
 def FullSpeed(speed=100):
