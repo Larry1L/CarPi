@@ -61,14 +61,11 @@ try:
     FullSpeed()
     
     while True:
-        if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Both sensors - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
+        if GPIO.input(sensorL_pin) == GPIO.LOW and GPIO.input(sensorR_pin) == GPIO.LOW: # The sensors reacts to the white line on the ground, driving forward
             FullSpeed()
-        elif GPIO.input(sensorL_pin) == GPIO.LOW:
-            print("Left Sensor - Line detected") # The left sensor reacts to the white line on the ground, turning right to not exit the ring
+        elif GPIO.input(sensorL_pin) == GPIO.LOW: # The left sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnRight()
-        elif GPIO.input(sensorR_pin) == GPIO.LOW:
-            print("Right Sensor - Line detected") # The right sensor reacts to the white line on the ground, turning right to not exit the ring
+        elif GPIO.input(sensorR_pin) == GPIO.LOW: # The right sensor reacts to the white line on the ground, turning right to not exit the ring
             TurnLeft()
         else:
             FullSpeed() # None of the sensors detect anything, allowing the car to drive forward
